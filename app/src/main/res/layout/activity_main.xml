@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+  <TextView
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:text="Números"
+      android:gravity="center"
+      />
+
+  <TextView
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:text="Primera opción"
+
+      />
+
+
+  <EditText
+      android:id="@+id/etNumeros"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:ems="10"
+      android:maxLength="6"
+      android:inputType="numberSigned"
+      android:hint="ingrese un número"/>
+
+  <Button
+      android:id="@+id/btnNumeros"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:text="ver"
+      />
+
+  <TextView
+      android:id="@+id/tvResultadoNumeros"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:text="Resultado"
+
+      />
+
+
+
+</LinearLayout>
