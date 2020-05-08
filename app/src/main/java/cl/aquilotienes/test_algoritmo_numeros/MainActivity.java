@@ -129,6 +129,82 @@ public class MainActivity extends AppCompatActivity {
     }
     private void cuatroDigitos(int num, int[] digito){
 
+        if(num == 1000)
+        {
+            Log.i("NUMERO: ", "" + numeros.get(num));
+        }
+        else
+            {
+            if(num > 1000 && num <= 9999)
+            {
+                //1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000
+                if(digito[1] == 0 && digito[2] == 0 && digito[3] == 0)
+                {
+                    Log.i("NUMERO: ", "" + numeros.get(digito[0]) + " waranga");
+                }
+                else
+                    {
+                        //1001, 1002, 1003, 1004, 1005, 1006, 1007, 1008, 1009 = 2000, 3000...
+                        if(digito[1] == 0 && digito[2] == 0)
+                        {
+                            Log.i("NUMERO: ", "" + numeros.get(digito[0]) + " waranga " +
+                                    numeros.get(digito[3]));
+                        }
+                        else
+                            {
+                                //1100, 1200, 1300, 1400, 1500, 1600, 1700, 1800, 1900 = 2000..
+                                if(digito[2] == 0 && digito[3] == 0)
+                                {
+                                    Log.i("NUMERO: ", "" + numeros.get(digito[0]) + " waranga " +
+                                            numeros.get(digito[1]) + " pataka");
+                                }
+                                else
+                                    {
+                                        //1010, 1020, 1030, 1040, 1050, 1060, 1070, 1080, 1090
+                                        if(digito[1] == 0 && digito[3] == 0)
+                                        {
+                                            Log.i("NUMERO: ", "" + numeros.get(digito[0]) + " waranga " +
+                                                    numeros.get(digito[2]) + " mari");
+                                        }
+                                        else
+                                            {
+                                                //1110, 1120, 1130, 1140, 1150, 1160, 1170
+                                                if(digito[3] == 0)
+                                                {
+                                                    Log.i("NUMERO: ", "" +
+                                                            numeros.get(digito[0]) + " waranga " +
+                                                            numeros.get(digito[1]) + " pataka " +
+                                                            numeros.get(digito[2]) + " mari");
+                                                }
+                                                else
+                                                    {
+                                                        //1101, 1102, 1103, 1104, 1105, 1106, 1107...
+                                                        if(digito[2] == 0)
+                                                        {
+                                                            Log.i("NUMERO: ", "" +
+                                                                    numeros.get(digito[0]) + " waranga " +
+                                                                    numeros.get(digito[1]) + " pataka " +
+                                                                    numeros.get(digito[3]));
+                                                        }
+                                                        else
+                                                            {
+                                                                //pendiente...
+                                                                //1011, 1012, 1013, 1014, 1015, 1016...
+                                                                if(digito[1] == 0)
+                                                                {
+                                                                    Log.i("NUMERO: ", "" +
+                                                                            numeros.get(digito[0]) + " waranga " + numeros.get(digito[2]) + " mari " +  numeros.get(digito[3]));
+                                                                }
+                                                        }
+                                                }
+                                        }
+                                }
+                        }
+                }
+            }
+        }
+
+
     }
 
 
@@ -191,6 +267,7 @@ public class MainActivity extends AppCompatActivity {
             {
                 if(num >= 20 && num <= 99)
                 {
+                    //20, 30, 40, 50, 60, 70, 80, 90
                     if(digito[1] == 0)
                     {
                         Log.i("NUMERO: ", ""+ numeros.get(digito[0])+ " mari");
