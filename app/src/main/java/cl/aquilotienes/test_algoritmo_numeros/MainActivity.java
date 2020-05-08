@@ -44,8 +44,6 @@ public class MainActivity extends AppCompatActivity {
         numeros.put(1000, "waranga");
 
 
-
-
         btnNumeros = (Button) findViewById(R.id.btnNumeros);
         etNumeros = (EditText) findViewById(R.id.etNumeros);
         tvResultadoNumeros = (TextView) findViewById(R.id.tvResultadoNumeros);
@@ -57,9 +55,9 @@ public class MainActivity extends AppCompatActivity {
 
                 int num = Integer.parseInt(etNumeros.getText().toString());
 
-                transformarNumeros1(num);
+                //transformarNumeros1(num);
                 //Log.i("NUMERO: ", ""+ transformarNumero(num));
-
+                transformacionDeNumeros(num);
 
 
             }
@@ -67,11 +65,158 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    private void transformacionDeNumeros(int num){
+
+        String cadena = Integer.toString(num);
+        char[] caracter = cadena.toCharArray();
+        int[] digito = new int[6];
+        int cantidad = cadena.length();
+
+
+        switch (cantidad){
+
+            case 1: //------- 1 y 9 -----
+                Log.i("MENSAJE", "1 DIGITO");
+                Log.i("NUMERO: ", "" + numeros.get(num));
+
+                break;
+
+            case 2: //----- 10 y 99 ---
+                Log.i("MENSAJE", "2 DIGITO");
+
+                digito[0] = Character.getNumericValue(caracter[0]);
+                digito[1] = Character.getNumericValue(caracter[1]);
+                dosDigitos(num, digito);
+
+
+                break;
+
+            case 3:
+                Log.i("MENSAJE", "3 DIGITO");
+
+                digito[0] = Character.getNumericValue(caracter[0]);
+                digito[1] = Character.getNumericValue(caracter[1]);
+                digito[2] = Character.getNumericValue(caracter[2]);
+
+                tresDigitos(num, digito);
+
+                break;
+
+            case 4:
+                Log.i("MENSAJE", "4 DIGITO");
+                digito[0] = Character.getNumericValue(caracter[0]);
+                digito[1] = Character.getNumericValue(caracter[1]);
+                digito[2] = Character.getNumericValue(caracter[2]);
+                digito[3] = Character.getNumericValue(caracter[3]);
+
+                cuatroDigitos(num, digito);
+
+                break;
+
+            case 5:
+                Log.i("MENSAJE", "5 DIGITO");
+
+                break;
+
+            case 6:
+                Log.i("MENSAJE", "6 DIGITO");
+
+                break;
+
+
+        }
+
+    }
+    private void cuatroDigitos(int num, int[] digito){
+
+    }
+
+
+    private void tresDigitos(int num, int[] digito){
+
+        if(num == 100)
+        {
+            Log.i("NUMERO: ", "" + numeros.get(num));
+        }
+        else
+            {
+            if(num > 100 && num <= 999)
+            {
+                if(digito[1] == 0 && digito[2] == 0)
+                {
+                    //100, 200, 300, 400, 500, 600, 700, 800, 900
+                    Log.i("NUMERO: ", "" + numeros.get(digito[0]) + " pataka");
+                }
+                else
+                    {
+                    if(digito[1] == 0)
+                    {
+                        //101, 102, 103, 104, 105, 106, 107, 108, 109 = 200, 300, 400, 500...
+                        Log.i("NUMERO: ", "" + numeros.get(digito[0]) + " pataka " +
+                                numeros.get(digito[2]));
+                    }else
+                        {
+                        if(digito[2] == 0)
+                        {
+                            //110, 120, 130, 140, 150, 160, 170, 180, 190 = 200, 300, 400, 500...
+                            Log.i("NUMERO: ", "" + numeros.get(digito[0]) + " pataka " +
+                                    numeros.get(digito[1]) + " mari");
+                        }else
+                            {
+                                Log.i("NUMERO: ", "" + numeros.get(digito[0]) + " pataka " +
+                                        numeros.get(digito[1]) + " mari " + numeros.get(digito[2]));
+                        }
+                    }
+                }
+            }
+        }
+
+
+    }//fin método tresDigitos
+
+
+    private void dosDigitos(int num, int[] digito){
+
+        if(num == 10)
+        {
+            Log.i("NUMERO: ", "" + numeros.get(num));
+        }
+        else
+        {
+            if(num > 10 && num < 20)
+            {
+                Log.i("NUMERO: ", "Mari " + numeros.get(digito[1]));
+            }
+            else
+            {
+                if(num >= 20 && num <= 99)
+                {
+                    if(digito[1] == 0)
+                    {
+                        Log.i("NUMERO: ", ""+ numeros.get(digito[0])+ " mari");
+                    }
+                    else
+                    {
+                        Log.i("NUMERO: ", "" + numeros.get(digito[0]) + " mari "
+                                + numeros.get(digito[1]));
+                    }
+
+                }
+            }
+        }
+
+    }//fin método dosDigitos()
+
+
+
+
+/*
+
     private String transformarNumero(int num){
 
-        /*
-         *   Algoritmo_numeros Brian Riveros Sepúlveda
-         * */
+
+         //   Algoritmo_numeros Brian Riveros Sepúlveda
+
 
         String[] basicos =
                 {
@@ -90,6 +235,8 @@ public class MainActivity extends AppCompatActivity {
 
 
         for(int i = 0; i <= var; i++){
+
+            if((var - i) == 1)
 
             if( Character.getNumericValue(cadena.charAt(i)) == 1)
                 palabra = palabra + " " + basicos[0];
@@ -121,25 +268,30 @@ public class MainActivity extends AppCompatActivity {
             if(Character.getNumericValue(cadena.charAt(i)) == 10)
                 palabra = palabra + " " + basicos[9];
 
-            if(var == 6)
-                palabra = palabra + " " + inter[1];
+            if( (Character.getNumericValue(cadena.charAt(i)) != 0) || (var == 4)){
 
-            if(var == 5)
-                palabra = palabra + " " + inter[2];
+                if(var == 6)
+                    palabra = palabra + " " + inter[1];
 
-            if(var == 4)
-                palabra = palabra + " " + inter[0];
+                if(var == 5)
+                    palabra = palabra + " " + inter[2];
 
-            if(var == 3)
-                palabra = palabra + " " + inter[1];
+                if(var == 4)
+                    palabra = palabra + " " + inter[0];
 
-            if(var == 2)
-                palabra = palabra + " " + inter[2];
+                if(var == 3)
+                    palabra = palabra + " " + inter[1];
 
-            if(var == 1)
-                palabra = palabra + " " + inter[3];
+                if(var == 2)
+                    palabra = palabra + " " + inter[2];
 
-            var = var - 1;
+                if(var == 1)
+                    palabra = palabra + " " + inter[3];
+
+                var = var - 1;
+
+            }
+
 
         }
 
@@ -165,7 +317,7 @@ public class MainActivity extends AppCompatActivity {
             }
             else //--2
             {
-                if(num >= 11 && num < 20) //---3
+                if(num > 11 && num < 20) //---3
                 {
 
                     String valor = Integer.toString(num);
@@ -187,13 +339,15 @@ public class MainActivity extends AppCompatActivity {
                         int num1 = Character.getNumericValue(dato1);
                         int num2 = Character.getNumericValue(dato2);
 
-                        if(num2 == 0){
+                        if(num2 != 0)//---4.1
+                        {
+                            Log.i("NUMERO: ", "" + numeros.get(num1) +
+                                    " mari--" + numeros.get(num2));
+                        }
+                        else//---4.1
+                            {
                             Log.i("NUMERO: ", ""+ numeros.get(num1) +
                                     " mari ");
-
-                        }else{
-                            Log.i("NUMERO: ", ""+ numeros.get(num1) +
-                                    " mari " + numeros.get(num2));
                         }
 
 
@@ -256,9 +410,19 @@ public class MainActivity extends AppCompatActivity {
                                         int num3 = Character.getNumericValue(dato3);
                                         int num4 = Character.getNumericValue(dato4);
 
-                                        if(num == 1000){
+                                        if(num == 1000)//6.1
+                                        {
                                             Log.i("NUMERO: ", ""+ numeros.get(num));
                                         }
+                                        else//6.1
+                                            {
+                                            if(dato2 == 0 && dato3 == 0)
+                                            {
+                                                Log.i("NUMERO: ", ""+ numeros.get(num1)
+                                                        + " waranga " + numeros.get(num));
+                                            }
+                                        }
+
 
 
 
@@ -285,12 +449,9 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-
-
-
     }
 
-
+*/
 
 
 
