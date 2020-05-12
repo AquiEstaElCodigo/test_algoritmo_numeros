@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.HashMap;
 import java.util.List;
@@ -55,9 +56,15 @@ public class MainActivity extends AppCompatActivity {
 
                 int num = Integer.parseInt(etNumeros.getText().toString());
 
-                //transformarNumeros1(num);
-                //Log.i("NUMERO: ", ""+ transformarNumero(num));
-                transformacionDeNumeros(num);
+
+                try{
+                    transformacionDeNumeros(num);
+                }catch(Exception e){
+
+                    Toast.makeText(getApplicationContext(), "Error: " + e.toString(),
+                            Toast.LENGTH_SHORT).show();
+                }
+
 
 
 
@@ -126,14 +133,72 @@ public class MainActivity extends AppCompatActivity {
                 break;
 
             case 6:
-                Log.i("MENSAJE", "6 DIGITO");
+                for(int i = 0; i < cantidad; i++){
+                    digito[i] = Character.getNumericValue(caracter[i]);
+                }
 
+                tvResultadoNumeros.setText(seisDigitos(num, digito));
+                limpiarResultado();
                 break;
 
 
         }
 
     }
+
+    private String seisDigitos(int num, int[] digito){
+        resultado = "";
+
+        //100
+        if(digito[0] == 1 && digito[1] == 0 && digito[2] == 0)
+            resultado = numeros.get(100) + " Waranga" +
+                    complementoDigitos(digito[3], digito[4], digito[5]);
+
+        //101
+        if(digito[0] == 1 && digito[1] == 0 && digito[2] == 1)
+            resultado = numeros.get(digito[0]) + " Pataka " + numeros.get(digito[2])
+                    + " Waranga " + complementoDigitos(digito[3], digito[4], digito[5]);
+
+
+        //200, 300, 400, 500, 600, 700, 800, 900
+        if(digito[0] != 0 && digito[0] != 1 && digito[1] == 0 && digito[2] == 0)
+            resultado = numeros.get(digito[0]) + " Pataka Waranga " +
+                    complementoDigitos(digito[3], digito[4], digito[5]);
+
+
+        //201, 202, 203, 204, 205, 206, 207, 208, 209 = 300, 400, 500, 600...
+        if(digito[0] != 0 && digito[0] != 1 && digito[1] == 0 && digito[2] != 0)
+            resultado = numeros.get(digito[0]) + " Pataka " + numeros.get(digito[2])
+                    + " Waranga " + complementoDigitos(digito[3], digito[4], digito[5]);
+
+
+        //110, 210, 310, 410, 510, 610, 710, 810, 910
+        if(digito[0] != 0 && digito[1] == 1 && digito[2] == 0)
+            resultado = numeros.get(digito[0]) + " Pataka Mari Waranga "
+                    + complementoDigitos(digito[3], digito[4], digito[5]);
+
+        //111, 112, 113, 114, 115, 116, 117, 118, 119 = 200, 300, 400, 500...
+        if(digito[0] != 0 && digito[1] == 1 && digito[2] != 0)
+            resultado = numeros.get(digito[0]) + " Pataka Mari " + numeros.get(digito[2])
+                    + " Waranga " + complementoDigitos(digito[3], digito[4], digito[5]);
+
+
+        //120, 130, 140, 150, 160, 170, 180, 190 = 200, 300, 400, 500...
+        if(digito[0] != 0 && digito[1] != 1 && digito[1] != 0 && digito[2] == 0)
+            resultado = numeros.get(digito[0]) + " Pataka " + numeros.get(digito[1])
+                    + " Mari Waranga " + complementoDigitos(digito[3], digito[4], digito[5]);
+
+
+        //todas las combinaciones
+        if(digito[0] != 0 && digito[1] != 0 && digito[1] != 1 && digito[2] != 0)
+            resultado = numeros.get(digito[0]) + " Pataka " + numeros.get(digito[1])
+                    + " Mari " + numeros.get(digito[2]) + " Waranga "
+                    + complementoDigitos(digito[3], digito[4], digito[5]);
+
+
+        return resultado;
+    }
+
 
     private String cincoDigitos(int num, int[] digito)
     {
