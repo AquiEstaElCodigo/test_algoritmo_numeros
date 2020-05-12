@@ -86,6 +86,7 @@ public class MainActivity extends AppCompatActivity {
             case 1:
 
                 tvResultadoNumeros.setText(numeros.get(num));
+                limpiarResultado();
 
                 break;
 
