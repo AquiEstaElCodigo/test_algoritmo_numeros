@@ -76,55 +76,52 @@ public class MainActivity extends AppCompatActivity {
 
         switch (cantidad){
 
-            case 1: //------- 1 y 9 -----
-                Log.i("MENSAJE", "1 DIGITO");
+            case 1:
+
                 tvResultadoNumeros.setText(numeros.get(num));
-                //Log.i("NUMERO: ", "" + numeros.get(num));
 
                 break;
 
-            case 2: //----- 10 y 99 ---
-                Log.i("MENSAJE", "2 DIGITO");
+            case 2:
 
                 for(int i = 0; i < cantidad; i++){
                     digito[i] = Character.getNumericValue(caracter[i]);
                 }
 
                 tvResultadoNumeros.setText(dosDigitos(num, digito));
-                //Log.i("NUMERO: ", ""+ dosDigitos(num, digito));
                 limpiarResultado();
 
                 break;
 
-            case 3: //tres digitos
-                Log.i("MENSAJE", "3 DIGITO");
+            case 3:
 
                 for(int i = 0; i < cantidad; i++){
                     digito[i] = Character.getNumericValue(caracter[i]);
                 }
 
                 tvResultadoNumeros.setText(tresDigitos(num, digito));
-                Log.i("NUMERO: ", ""+ tresDigitos(num, digito));
                 limpiarResultado();
 
                 break;
 
-            case 4: //cuatro digitos
-                Log.i("MENSAJE", "4 DIGITO");
+            case 4:
 
                 for(int i = 0; i < cantidad; i++){
                     digito[i] = Character.getNumericValue(caracter[i]);
                 }
 
                 tvResultadoNumeros.setText(cuatroDigitos(num, digito));
-                Log.i("NUMEROS: ", "" + cuatroDigitos(num, digito));
                 limpiarResultado();
 
                 break;
 
             case 5:
-                Log.i("MENSAJE", "5 DIGITO");
+                for(int i = 0; i < cantidad; i++){
+                    digito[i] = Character.getNumericValue(caracter[i]);
+                }
 
+                tvResultadoNumeros.setText(cincoDigitos(num, digito));
+                limpiarResultado();
 
                 break;
 
@@ -137,6 +134,96 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
+
+    private String cincoDigitos(int num, int[] digito)
+    {
+
+        //10.000
+        if(digito[0] == 1 && digito[1] == 0)
+            resultado = numeros.get(10) + " " + numeros.get(1000) + " " +
+                    complementoDigitos(digito[2], digito[3],digito[4]);
+
+        //11.000, 12.000, 13.000, 14.000, 15.000, 16.000, 17.000, 18.000, 19.000
+        if(digito[0] == 1 && digito[1] != 0 )
+            resultado = "Mari " + numeros.get(digito[1]) + " Waranga " + " " +
+                    complementoDigitos(digito[2], digito[3], digito[4]);
+
+        //20.000, 30.000, 40.000, 50.000, 60.000, 70.000, 80.000, 90.000
+        if (digito[0] != 1 && digito[1] == 0)
+            resultado = numeros.get(digito[0]) + " Mari Waranga " + " "
+                    + complementoDigitos(digito[2], digito[3], digito[4]);
+
+        //21.000, 22.000, 23.000, 24.000, 25.000, 26.000, 27.000, 28.000, 29.000 = 30.000, 40.000...
+        if(digito[0] != 1 && digito[1] !=0)
+            resultado = numeros.get(digito[0]) + " Mari " + numeros.get(digito[1]) + " Waranga "
+                    + " " + complementoDigitos(digito[2], digito[3], digito[4]);
+
+
+        return resultado;
+    }//fin método cincoDigitos
+
+    private String complementoDigitos(int digito1, int digito2, int digito3)
+    {
+
+        resultado = "";
+        //000
+        if(digito1 == 0 && digito2 == 0 && digito3 == 0)
+            resultado = "";
+
+        //001, 002, 003, 004, 005, 006, 007, 008, 009
+        if(digito1 == 0 && digito2 == 0 && digito3 != 0 )
+            resultado = numeros.get(digito3);
+
+        //010
+        if(digito1 == 0 && digito2 == 1 && digito3 == 0)
+            resultado = numeros.get(10);
+
+        //011, 012, 013, 014, 015, 016, 017, 018, 019
+        if(digito1 == 0 && digito2 == 1 && digito3 != 0)
+            resultado = "Mari " + numeros.get(digito3);
+
+        //020, 030, 040, 050, 060, 070, 080, 090
+        if(digito1 == 0 && digito2 != 1 && digito2 != 0 && digito3 == 0)
+            resultado = numeros.get(digito2) + " Mari";
+
+        //100
+        if(digito1 == 1 && digito2 == 0 && digito3 == 0)
+            resultado = numeros.get(100);
+
+        //101
+        if(digito1 == 1 && digito2 == 0 && digito3 == 1)
+            resultado = numeros.get(digito1) + " Pataka " + numeros.get(digito3);
+
+        //200, 300, 400, 500, 600, 700, 800, 900
+        if(digito1 != 0 && digito1 != 1 && digito2 == 0 && digito3 == 0)
+            resultado = numeros.get(digito1) + " Pataka";
+
+        //201, 202, 203, 204, 205, 206, 207, 208, 209 = 300, 400, 500, 600...
+        if(digito1 != 0 && digito1 != 1 && digito2 == 0 && digito3 != 0)
+            resultado = numeros.get(digito1) + " Pataka " + numeros.get(digito3);
+
+        //110, 210, 310, 410, 510, 610, 710, 810, 910
+        if(digito1 != 0 && digito2 == 1 && digito3 == 0)
+            resultado = numeros.get(digito1) + " Pataka Mari";
+
+        //111, 112, 113, 114, 115, 116, 117, 118, 119 = 200, 300, 400, 500...
+        if(digito1 != 0 && digito2 == 1 && digito3 != 0)
+            resultado = numeros.get(digito1) + " Pataka Mari " + numeros.get(digito3);
+
+
+        //120, 130, 140, 150, 160, 170, 180, 190 = 200, 300, 400, 500...
+        if(digito1 != 0 && digito2 != 1 && digito2 != 0 && digito3 == 0)
+            resultado = numeros.get(digito1) + " Pataka " + numeros.get(digito2) + " Mari";
+
+        if(digito1 != 0 && digito2 != 0 && digito2 != 1 && digito3 != 0)
+            resultado = numeros.get(digito1) + " Pataka " + numeros.get(digito2) + " Mari "
+                    + numeros.get(digito3);
+
+
+        return resultado;
+    }//fin método complementoDigitos
+
+
 
 
     private String cuatroDigitos(int num, int[] digito)
@@ -262,8 +349,6 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-
-
     private String dosDigitos(int num, int[] digito){
 
         if(num == 10)
@@ -299,368 +384,9 @@ public class MainActivity extends AppCompatActivity {
     }//fin método dosDigitos()
 
 
-
     private void limpiarResultado(){
         resultado = "";
     }
-
-
-
-
-/*
-
-    private String transformarNumero(int num){
-
-
-         //   Algoritmo_numeros Brian Riveros Sepúlveda
-
-
-        String[] basicos =
-                {
-                        "kiñe", "epu", "küla", "meli", "kechu",
-                        "kayu", "regle", "pura", "aylla", "mari"
-                };
-
-        String[] inter =
-                {
-                        "waranga", "pataka", "mari", ""
-                };
-
-        String cadena = Integer.toString(num);
-        String palabra = " ";
-        int var = cadena.length();
-
-
-        for(int i = 0; i <= var; i++){
-
-            if((var - i) == 1)
-
-            if( Character.getNumericValue(cadena.charAt(i)) == 1)
-                palabra = palabra + " " + basicos[0];
-
-            if(Character.getNumericValue(cadena.charAt(i)) == 2)
-                palabra = palabra + " " + basicos[1];
-
-            if(Character.getNumericValue(cadena.charAt(i)) == 3)
-                palabra = palabra + " " + basicos[2];
-
-            if(Character.getNumericValue(cadena.charAt(i)) == 4)
-                palabra = palabra + " " + basicos[3];
-
-            if(Character.getNumericValue(cadena.charAt(i)) == 5)
-                palabra = palabra + " " + basicos[4];
-
-            if(Character.getNumericValue(cadena.charAt(i)) == 6)
-                palabra = palabra + " " + basicos[5];
-
-            if(Character.getNumericValue(cadena.charAt(i)) == 7)
-                palabra = palabra + " " + basicos[6];
-
-            if(Character.getNumericValue(cadena.charAt(i)) == 8)
-                palabra = palabra + " " + basicos[7];
-
-            if(Character.getNumericValue(cadena.charAt(i)) == 9)
-                palabra = palabra + " " + basicos[8];
-
-            if(Character.getNumericValue(cadena.charAt(i)) == 10)
-                palabra = palabra + " " + basicos[9];
-
-            if( (Character.getNumericValue(cadena.charAt(i)) != 0) || (var == 4)){
-
-                if(var == 6)
-                    palabra = palabra + " " + inter[1];
-
-                if(var == 5)
-                    palabra = palabra + " " + inter[2];
-
-                if(var == 4)
-                    palabra = palabra + " " + inter[0];
-
-                if(var == 3)
-                    palabra = palabra + " " + inter[1];
-
-                if(var == 2)
-                    palabra = palabra + " " + inter[2];
-
-                if(var == 1)
-                    palabra = palabra + " " + inter[3];
-
-                var = var - 1;
-
-            }
-
-
-        }
-
-        return palabra;
-
-
-    }
-
-
-
-    private void transformarNumeros1(int num){
-
-
-        if(num == 0 && num < 0) // 1-
-        {
-            Log.i("NUMERO: ", "INCORRECTO");
-        }
-        else // 1-
-        {
-            if(num >=1 && num <= 10) //--2
-            {
-                Log.i("NUMERO: ", ""+numeros.get(num));
-            }
-            else //--2
-            {
-                if(num > 11 && num < 20) //---3
-                {
-
-                    String valor = Integer.toString(num);
-                    char caracter = valor.charAt(1);
-                    int num1 = Character.getNumericValue(caracter);
-
-                    Log.i("NUMEROS: ", " "+ numeros.get(10)+ " " + numeros.get(num1));
-
-
-                }else //---3
-                {
-                    if(num >= 20 && num <= 99) //--4
-                    {
-
-                        String valor = Integer.toString(num);
-                        char dato1 = valor.charAt(0);
-                        char dato2 = valor.charAt(1);
-
-                        int num1 = Character.getNumericValue(dato1);
-                        int num2 = Character.getNumericValue(dato2);
-
-                        if(num2 != 0)//---4.1
-                        {
-                            Log.i("NUMERO: ", "" + numeros.get(num1) +
-                                    " mari--" + numeros.get(num2));
-                        }
-                        else//---4.1
-                            {
-                            Log.i("NUMERO: ", ""+ numeros.get(num1) +
-                                    " mari ");
-                        }
-
-
-                    }
-                    else //--4
-                        {
-
-                            if(num >= 100 && num <= 999)//--5
-                            {
-                                String valor = Integer.toString(num);
-                                char dato1 = valor.charAt(0);
-                                char dato2 = valor.charAt(1);
-                                char dato3 = valor.charAt(2);
-
-                                int num1 = Character.getNumericValue(dato1);
-                                int num2 = Character.getNumericValue(dato2);
-                                int num3 = Character.getNumericValue(dato3);
-
-                                if(num == 100){ //5.1
-
-                                    Log.i("NUMERO: ", ""+ numeros.get(num));
-
-                                }else{ //5.1
-                                    if(num2 == 0 && num3 == 0)//5.1.1
-                                    {
-
-                                        Log.i("NUMERO: ", ""+ numeros.get(num1) +
-                                                " pataka");
-                                    }else //5.1.1
-                                        {
-
-                                        if(num2 == 0) //5.1.1.1
-                                        {
-                                            Log.i("NUMERO: ", "" + numeros.get(num1) +
-                                                    " pataka " + numeros.get(num3));
-                                        }else //5.1.1.1
-                                            {
-                                            Log.i("NUMERO: ", "" + numeros.get(num1) +
-                                                    " pataka " + numeros.get(num2) + " mari "
-                                                    + numeros.get(num3));
-                                        }
-                                    }
-
-                                }
-
-                            }
-                            else //--5
-                                {
-
-                                    if(num >= 1000 && num <= 9999)//--6
-                                    {
-                                        String valor = Integer.toString(num);
-                                        char dato1 = valor.charAt(0);
-                                        char dato2 = valor.charAt(1);
-                                        char dato3 = valor.charAt(2);
-                                        char dato4 = valor.charAt(3);
-
-                                        int num1 = Character.getNumericValue(dato1);
-                                        int num2 = Character.getNumericValue(dato2);
-                                        int num3 = Character.getNumericValue(dato3);
-                                        int num4 = Character.getNumericValue(dato4);
-
-                                        if(num == 1000)//6.1
-                                        {
-                                            Log.i("NUMERO: ", ""+ numeros.get(num));
-                                        }
-                                        else//6.1
-                                            {
-                                            if(dato2 == 0 && dato3 == 0)
-                                            {
-                                                Log.i("NUMERO: ", ""+ numeros.get(num1)
-                                                        + " waranga " + numeros.get(num));
-                                            }
-                                        }
-
-
-
-
-                                    }
-                                    else //--6
-                                        {
-
-                                    }
-
-
-                            }
-
-
-                    }
-
-
-                }
-
-
-            }
-
-
-        }
-
-
-
-    }
-
-*/
-
-
-
-
-    /*
-
-    private void cuatroDigitos(int num, int[] digito){
-
-        if(num == 1000)
-        {
-            Log.i("NUMERO: ", "" + numeros.get(num));
-        }
-        else
-        {
-            if(num > 1000 && num <= 9999)
-            {
-                //1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000
-                if(digito[1] == 0 && digito[2] == 0 && digito[3] == 0)
-                {
-                    Log.i("NUMERO: ", "" + numeros.get(digito[0]) + " waranga");
-                }
-                else
-                {
-                    //1001, 1002, 1003, 1004, 1005, 1006, 1007, 1008, 1009 = 2000, 3000...
-                    if(digito[1] == 0 && digito[2] == 0)
-                    {
-                        Log.i("NUMERO: ", "" + numeros.get(digito[0]) + " waranga " +
-                                numeros.get(digito[3]));
-                    }
-                    else
-                    {
-                        //1100, 1200, 1300, 1400, 1500, 1600, 1700, 1800, 1900 = 2000..
-                        if(digito[2] == 0 && digito[3] == 0)
-                        {
-                            Log.i("NUMERO: ", "" + numeros.get(digito[0]) + " waranga " +
-                                    numeros.get(digito[1]) + " pataka");
-                        }
-                        else
-                        {
-                            //1010, 1020, 1030, 1040, 1050, 1060, 1070, 1080, 1090
-                            if(digito[1] == 0 && digito[3] == 0)
-                            {
-                                Log.i("NUMERO: ", "" + numeros.get(digito[0]) + " waranga " +
-                                        numeros.get(digito[2]) + " mari");
-                            }
-                            else
-                            {
-                                //1110, 1120, 1130, 1140, 1150, 1160, 1170
-                                if(digito[3] == 0)
-                                {
-                                    Log.i("NUMERO: ", "" +
-                                            numeros.get(digito[0]) + " waranga " +
-                                            numeros.get(digito[1]) + " pataka " +
-                                            numeros.get(digito[2]) + " mari");
-                                }
-                                else
-                                {
-                                    //1101, 1102, 1103, 1104, 1105, 1106, 1107...
-                                    if(digito[2] == 0)
-                                    {
-                                        Log.i("NUMERO: ", "" +
-                                                numeros.get(digito[0]) + " waranga " +
-                                                numeros.get(digito[1]) + " pataka " +
-                                                numeros.get(digito[3]));
-                                    }
-                                    else
-                                    {
-                                        //1011, 1012, 1013, 1014, 1015, 1016...
-                                        if(digito[1] == 0)
-                                        {
-
-                                            if(digito[2] == 1){
-                                                Log.i("NUMERO: ", "" +
-                                                        numeros.get(digito[0]) + " waranga mari " +  numeros.get(digito[3]));
-                                            }else{
-
-                                                Log.i("NUMERO: ", "" + numeros.get(digito[0]) + " waranga " + numeros.get(digito[2]) + " mari " +
-                                                        numeros.get(digito[3]));
-                                            }
-
-                                        }
-                                        else
-                                            {
-                                                //1115, 1116, 1117
-                                                if(digito[3] == 1)
-                                                {
-                                                    Log.i("NUMEROS: ", ""+ numeros.get(digito[0]) + " waranga " + numeros.get(digito[1]) +
-                                                            " pataka mari" + numeros.get(digito[3]));
-                                                }
-                                                else {
-                                                    Log.i("NUMERO: ", "" +
-                                                            numeros.get(digito[0]) +
-                                                            " waranga " + numeros.get(digito[1]) +
-                                                            " pataka " + numeros.get(digito[2]) +
-                                                            " mari " + numeros.get(digito[3]));
-                                                }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
-
-    }
-
-
-*/
-
 
 
 
