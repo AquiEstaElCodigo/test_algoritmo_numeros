@@ -23,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
     EditText etNumeros;
     String resultado;
     Map<Integer, String> numeros;
+    final String MENSAJE_ERROR = "Ingrese un número entre 1 y 999999";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,19 +54,24 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-
-                int num = Integer.parseInt(etNumeros.getText().toString());
-
-
                 try{
-                    transformacionDeNumeros(num);
-                }catch(Exception e){
+                    int num = Integer.parseInt(etNumeros.getText().toString());
 
+                    if(num == 0 || num == 00 || num == 000 || num == 0000 || num == 00000
+                            || num == 000000)
+
+                        tvResultadoNumeros.setText(MENSAJE_ERROR);
+                    else
+                        transformacionDeNumeros(num);
+
+                }
+                catch (NumberFormatException nfe){
+                    tvResultadoNumeros.setText(MENSAJE_ERROR);
+                }
+                catch(Exception e){
                     Toast.makeText(getApplicationContext(), "Error: " + e.toString(),
                             Toast.LENGTH_SHORT).show();
                 }
-
-
 
 
             }
@@ -80,21 +86,17 @@ public class MainActivity extends AppCompatActivity {
         int[] digito = new int[6];
         int cantidad = cadena.length();
 
-
         switch (cantidad){
 
             case 1:
-
                 tvResultadoNumeros.setText(numeros.get(num));
                 limpiarResultado();
 
                 break;
 
             case 2:
-
-                for(int i = 0; i < cantidad; i++){
+                for(int i = 0; i < cantidad; i++)
                     digito[i] = Character.getNumericValue(caracter[i]);
-                }
 
                 tvResultadoNumeros.setText(dosDigitos(num, digito));
                 limpiarResultado();
@@ -102,10 +104,8 @@ public class MainActivity extends AppCompatActivity {
                 break;
 
             case 3:
-
-                for(int i = 0; i < cantidad; i++){
+                for(int i = 0; i < cantidad; i++)
                     digito[i] = Character.getNumericValue(caracter[i]);
-                }
 
                 tvResultadoNumeros.setText(tresDigitos(num, digito));
                 limpiarResultado();
@@ -113,41 +113,39 @@ public class MainActivity extends AppCompatActivity {
                 break;
 
             case 4:
-
-                for(int i = 0; i < cantidad; i++){
+                for(int i = 0; i < cantidad; i++)
                     digito[i] = Character.getNumericValue(caracter[i]);
-                }
 
-                tvResultadoNumeros.setText(cuatroDigitos(num, digito));
+                tvResultadoNumeros.setText(cuatroDigitos(digito));
                 limpiarResultado();
 
                 break;
 
             case 5:
-                for(int i = 0; i < cantidad; i++){
+                for(int i = 0; i < cantidad; i++)
                     digito[i] = Character.getNumericValue(caracter[i]);
-                }
 
-                tvResultadoNumeros.setText(cincoDigitos(num, digito));
+                tvResultadoNumeros.setText(cincoDigitos(digito));
                 limpiarResultado();
 
                 break;
 
             case 6:
-                for(int i = 0; i < cantidad; i++){
+                for(int i = 0; i < cantidad; i++)
                     digito[i] = Character.getNumericValue(caracter[i]);
-                }
 
-                tvResultadoNumeros.setText(seisDigitos(num, digito));
+                tvResultadoNumeros.setText(seisDigitos(digito));
                 limpiarResultado();
                 break;
 
-
+            default:
+                tvResultadoNumeros.setText(MENSAJE_ERROR);
+                break;
         }
 
     }
 
-    private String seisDigitos(int num, int[] digito){
+    private String seisDigitos(int[] digito){
         resultado = "";
 
         //100
@@ -201,7 +199,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    private String cincoDigitos(int num, int[] digito)
+    private String cincoDigitos(int[] digito)
     {
 
         //10.000
@@ -227,6 +225,23 @@ public class MainActivity extends AppCompatActivity {
 
         return resultado;
     }//fin método cincoDigitos
+
+
+    public String cuatroDigitos(int[] digito){
+
+        //1000
+        if(digito[0] == 1)
+            resultado = " Waranga " + complementoDigitos(digito[1], digito[2], digito[3]);
+
+        //2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000
+        if(digito[0] != 1)
+            resultado = numeros.get(digito[0]) + " Waranga "
+                    + complementoDigitos(digito[1], digito[2], digito[3]);
+
+        return resultado;
+
+    }//fin método cuatroDigitos
+
 
     private String complementoDigitos(int digito1, int digito2, int digito3)
     {
@@ -290,73 +305,6 @@ public class MainActivity extends AppCompatActivity {
     }//fin método complementoDigitos
 
 
-
-
-    private String cuatroDigitos(int num, int[] digito)
-    {
-        //1000
-        if(num == 1000)
-            resultado = numeros.get(num);
-
-        //2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000
-        if(digito[0] != 1 && digito[1] == 0 && digito[2] == 0 && digito[3] == 0)
-            resultado = numeros.get(digito[0]) + " Waranga";
-
-        //1100, 2100, 3100, 4100, 5100, 6100, 7100, 8100, 9100
-        if(digito[1] == 1 && digito[2] == 0 && digito[3] == 0)
-            resultado = numeros.get(digito[0]) + " Waranga pataka";
-
-
-        //1200, 1300, 1400, 1500, 1600, 1700, 1800, 1900 = 2000, 3000
-        if(digito[1] != 0 && digito[1] != 1 && digito[2] == 0 && digito[3] == 0)
-            resultado = numeros.get(digito[0]) + " Waranga " + numeros.get(digito[1])
-                    + " Pataka";
-
-        //1110, 3110, 4110, 5110, 6110, 7110, 8110, 9110
-        if(digito[1] == 1 && digito[2] == 1 && digito[3] == 0)
-            resultado = numeros.get(digito[0]) + " Waranga " + numeros.get(digito[1])
-                    + " Pataka Mari";
-
-        //1210, 1310, 1410, 1510, 1610, 1710, 1810, 1910 = 2000, 3000, 4000...
-        if(digito[1] != 0 && digito[1] != 1 && digito[2] == 1 && digito[3] == 0)
-            resultado = numeros.get(digito[0]) + " Waranga " + numeros.get(digito[1])
-                    + " Pataka Mari";
-
-        //1220, 1340, 1450, 1670, 1780, 1890 = 2000, 3000, 4000
-        if(digito[1] != 0 && digito[1] != 1 && digito[2] != 0 && digito[2] != 1 && digito[3] == 0)
-            resultado = numeros.get(digito[0]) + " Waranga " + numeros.get(digito[1])
-                    + " Pataka " + numeros.get(digito[2]) + " Mari";
-
-        //1001, 1002, 1003, 1004, 1005, 1006, 1007, 1008, 1009 = 2000, 3000, 4000...
-        if(digito[1] == 0 && digito[2] == 0 && digito[3] != 0)
-            resultado = numeros.get(digito[0]) + " Waranga " + numeros.get(digito[3]);
-
-        //1010, 2010, 3010, 4010, 5010, 6010, 7010, 8010, 9010
-        if(digito[1] == 0 && digito[2] == 1 && digito[3] == 0)
-            resultado = numeros.get(digito[0]) + " Waranga Mari";
-
-        //1011, 1012, 1013, 1014, 1015, 1016, 1017, 1018, 1019 = 2000, 3000, 4000...
-        if(digito[1] == 0 && digito[2] == 1 && digito[3] != 0)
-            resultado = numeros.get(digito[0]) + " Waranga Mari " + numeros.get(digito[3]);
-
-
-        //1020, 1030, 1040, 1050, 1060, 1070, 1080, 1090 = 2000, 3000, 4000...
-        if(digito[1] == 0 && digito[2] != 0 && digito[2] != 1 && digito[3] ==0)
-            resultado = numeros.get(digito[0]) + " Waranga " + numeros.get(digito[2]) + " Mari";
-
-        //1101, 1102, 1103, 1104, 1105, 1106, 1107, 1108, 1109 = 2000, 3000, 4000....
-        if(digito[1] != 0 && digito[2] == 0 && digito[3] != 0)
-            resultado = numeros.get(digito[0]) + " Waranga " + numeros.get(digito[1])
-                    + " Pataka " + numeros.get(digito[3]);
-
-        if(digito[0] != 0 && digito[1] != 0 && digito[2] != 0 && digito[3] != 0)
-            resultado = numeros.get(digito[0]) + " Waranga " + numeros.get(digito[1])
-                    + " Pataka " + numeros.get(digito[2]) + " Mari " + numeros.get(digito[3]);
-
-
-        return resultado;
-    }//fin método cuatroDigitos()
-
     private String tresDigitos(int num, int[] digito)
     {
 
@@ -411,8 +359,6 @@ public class MainActivity extends AppCompatActivity {
 
         return resultado;
     }//fin método tresDigitos
-
-
 
 
     private String dosDigitos(int num, int[] digito){
