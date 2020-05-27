@@ -3,16 +3,12 @@ package cl.aquilotienes.test_algoritmo_numeros;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
-import android.util.Log;
-import android.util.Pair;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
@@ -29,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         resultado = "";
         numeros = new HashMap<Integer, String>();
 
@@ -49,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
         btnNumeros = (Button) findViewById(R.id.btnNumeros);
         etNumeros = (EditText) findViewById(R.id.etNumeros);
         tvResultadoNumeros = (TextView) findViewById(R.id.tvResultadoNumeros);
+
 
         btnNumeros.setOnClickListener(new View.OnClickListener() {
             @Override
